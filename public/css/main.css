@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap');
+
+html, body {
+    margin: 0;
+    padding: 0;
+    color: white;
+    font-family: 'Lato', Helvetica, sans-serif;
+}
+
+.content {
+    background-color: #212121;
+    display: block;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+}
+
+.central-panel {
+    padding: 20px 40px;
+    background-color: #37474F;
+    box-shadow: 0 0px 8px 0 rgb(0 0 0 / 20%);
+    text-align: center;
+    display: inline-block;
+    border-radius: 3px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 350px;
+}
+
+.central-panel h1 {
+}
+
+form {
+    margin: 10px 0;
+}
+
+form > * {
+    display: block;
+    margin: 15px 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+input[type='text'], input[type='password'], input[type='email'] {
+    background-color: #263238;
+    padding: 10px;
+}
+
+input[type='submit'] {
+    padding: 10px 0;
+    background-color: #FF3D00;
+    font-weight: bold;
+}
+
+input {
+    color: whitesmoke;
+    font-family: inherit;
+    border-radius: 5px;
+    border-style: hidden;
+    font-size: 15px;
+}
+
+input:focus {
+    outline: none;
+    color: white;
+}
+
+h1 {
+    font-weight: 900;
+}

@@ -1,0 +1,10 @@
+{
+    "server": {
+        "ip": "127.0.0.1",
+        "port": 8080
+    },
+    "admin": {
+        "username": "isaac",
+        "password": "password123"
+    }
+}
