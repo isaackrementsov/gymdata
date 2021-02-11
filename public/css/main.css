@@ -8,11 +8,16 @@ html, body {
 }
 
 .content {
-    background-color: #212121;
+    background-color: #263238;
     display: block;
     height: 100%;
     width: 100%;
     position: fixed;
+}
+
+.flex-container {
+    display: flex;
+    flex-direction: row;
 }
 
 .central-panel {
@@ -30,6 +35,7 @@ html, body {
 }
 
 .central-panel h1 {
+    color: #FBFD1E;
 }
 
 form {
@@ -38,7 +44,7 @@ form {
 
 form > * {
     display: block;
-    margin: 15px 0;
+    margin: 17px 0;
     width: 100%;
     box-sizing: border-box;
 }
@@ -50,7 +56,8 @@ input[type='text'], input[type='password'], input[type='email'] {
 
 input[type='submit'] {
     padding: 10px 0;
-    background-color: #FF3D00;
+    margin-top: 25px;
+    background-color: #FED136;
     font-weight: bold;
 }
 
@@ -68,5 +75,46 @@ input:focus {
 }
 
 h1 {
-    font-weight: 900;
+    font-weight: 400;
+}
+
+ul.side-nav {
+    list-style-type: none;
+    background-color: #37474F;
+    margin: 0;
+    padding: 20px 0;
+}
+
+.side-nav a {
+    padding: 15px 40px;
+    font-size: 17px;
+    font-weight: 300;
+    display: block;
+}
+
+.side-nav .link:hover, .side-nav .link.active {
+    background-color: #455A64;
+    color: #FED136;
+    transition: 0.2s ease-in-out;
+}
+
+.side-nav a {
+    text-decoration: none;
+    color: whitesmoke;
+}
+
+a:visited {
+    color: inherit;
+}
+
+.graphs {
+    flex: 1;
+}
+
+.graphs h1 {
+    font-weight: 700;
+    font-size: 35px;
+    width: 100%;
+    position: absolute;
+    padding: 0 40px;
 }
