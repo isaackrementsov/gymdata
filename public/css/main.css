@@ -5,6 +5,7 @@ html, body {
     padding: 0;
     color: white;
     font-family: 'Lato', Helvetica, sans-serif;
+    overflow-y: hidden;
 }
 
 .content {
@@ -49,7 +50,7 @@ form > * {
     box-sizing: border-box;
 }
 
-input[type='text'], input[type='password'], input[type='email'] {
+input[type='text'], input[type='password'], input[type='email'], input[type='number'] {
     background-color: #263238;
     padding: 10px;
 }
@@ -59,6 +60,7 @@ input[type='submit'] {
     margin-top: 25px;
     background-color: #FED136;
     font-weight: bold;
+    color: #212121;
 }
 
 input {
@@ -69,7 +71,7 @@ input {
     font-size: 15px;
 }
 
-input:focus {
+button:focus, input:focus, select:focus {
     outline: none;
     color: white;
 }
@@ -83,6 +85,7 @@ ul.side-nav {
     background-color: #37474F;
     margin: 0;
     padding: 20px 0;
+    box-shadow: 0 0px 8px 0 rgb(0 0 0 / 20%);
 }
 
 .side-nav a {
@@ -109,12 +112,168 @@ a:visited {
 
 .graphs {
     flex: 1;
+    padding: 0 30px;
+    overflow-y: scroll;
+}
+
+.graphs .flex-container {
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: center;
 }
 
 .graphs h1 {
     font-weight: 700;
     font-size: 35px;
     width: 100%;
+    margin: 0;
+    padding: 20px 0;
+    display: block;
+}
+
+.chart-container {
+    padding: 30px 25px;
+    margin: 15px 30px;
+    background-color: #212121;
+    border-radius: 5px;
+    box-shadow: 0 0px 8px 0 rgb(0 0 0 / 20%);
+}
+
+.chart-container p {
+    font-size: 18px;
+    font-weight: 300;
+}
+
+select {
+    font-weight: 300;
+    margin: 5px;
+    min-width: 100px;
+    padding: 5px;
+    font-size: 16px;
+    border-style: hidden;
+    border-radius: 3px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    color: whitesmoke;
+    background: url(/img/select-bg.png) 90% / 15% no-repeat #263238;
+}
+
+.chart-container p {
+   margin: 0 20px 20px 20px;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='number'] {
+    font-weight: 300;
+    width: 20px;
+    text-align: right;
+    padding: 5px;
+    margin: 5px;
+    margin-right: 0;
+    -moz-appearance: textfield;
+}
+
+#details-container {
+    text-align: center;
+    position: relative;
+    width: 400px;
+    padding-bottom: 110px;
+}
+
+.bottom-button {
     position: absolute;
-    padding: 0 40px;
+    box-sizing: border-box;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    border-style: hidden;
+    background-color: #FED136;
+    color: #212121;
+    font-size: 18px;
+    padding: 20px 0;
+    border-radius: 0 0 5px 5px;
+}
+
+.bottom-button.inactive {
+    color: #FED136;
+    background-color: #3b3b3b;
+}
+
+.bottom-button:focus {
+    color: #212121;
+}
+
+.bottom-button.inactive:focus {
+    color: #FED136;
+}
+
+.activity-container {
+    height: 150px;
+    overflow-y: scroll;
+    background-color: #3b3b3b;
+    border-radius: 5px;
+}
+
+.activity-container p {
+    padding: 15px 20px;
+    font-size: 17px;
+    font-weight: 400;
+    margin: 0;
+    border-bottom: 1px solid #636262;
+    color: #a3a3a3;
+    text-align: left;
+}
+
+.big-data {
+    padding: 30px 40px;
+    color: #FFE57F;
+}
+
+.big-data h1 {
+    margin: 0;
+    padding: 0;
+    font-weight: 900;
+    font-size: 50px;
+}
+
+.big-data h2 {
+    font-weight: 300;
+    margin-bottom: 0;
+}
+
+#hour-groups {
+    padding-top: 10px;
+    height: 100%;
+    width: 500px;
+    overflow-y: scroll;
+}
+
+#hour-groups p {
+    margin: 15px 0;
+    height: 20px;
+    display: block;
+}
+
+.hour-group {
+    border-bottom: 1px solid #ababab;
+}
+
+.hour-group h3 {
+    font-size: 23px;
+    display: block;
+    font-weight: 700;
+}
+.hour-group p span:first-child {
+    float: left;
+}
+
+.hour-group p span:last-child {
+    float: right;
 }

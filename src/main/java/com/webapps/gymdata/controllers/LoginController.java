@@ -12,6 +12,7 @@ public class LoginController {
         ctx.render("index.jte");
     }
     
+    // Handle login form submit
     public static void post(Context ctx){
         // Get username and password from form data (<form action="/" method="POST"> in index.jte)
         String username = ctx.formParam("username");
@@ -29,9 +30,11 @@ public class LoginController {
         }
     }
     
+    // Log user out of a session
     public static void endSession(Context ctx){        
+        // Destroy existing session
         ctx.req.getSession().invalidate();
-        
+        // Redirect to login page
         ctx.redirect("/");
     }
     
