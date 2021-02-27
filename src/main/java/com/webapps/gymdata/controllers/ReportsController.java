@@ -30,8 +30,13 @@ public class ReportsController {
             timestamps.addAll(member.getTimestamps());
         }
         
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("timestamps", timestamps);
+        data.put("members", members);
+        data.put("scans", scans);
+        
         // Load template with timestamps, members, and scans
-        ctx.render("members.jte", Map.of("timestamps", timestamps, "members", members, "scans", scans));        
+        ctx.render("members.jte", data);        
     }
     
     // Load staff report
@@ -70,8 +75,14 @@ public class ReportsController {
         // Sort the keys so that groups are listed in order of increasing hours
         hourGroupKeys.sort(Comparator.naturalOrder());
         
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("totalCost", totalCost);
+        data.put("staff", staff);
+        data.put("hourGroups", hourGroups);
+        data.put("hourGroupKeys", hourGroupKeys);
+        
         // Render the staff report template and pass the total employee cost, staff, and hour groups as parameters
-        ctx.render("staff.jte", Map.of("totalCost", totalCost, "staff", staff, "hourGroups", hourGroups, "hourGroupKeys", hourGroupKeys));        
+        ctx.render("staff.jte", data);        
     }
     
 }
