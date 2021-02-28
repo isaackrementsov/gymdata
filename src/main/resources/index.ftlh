@@ -1,6 +1,9 @@
+<%-- index.jte provides a simple login system for the admin to access reports --%>
+
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="utf-8"/> 
         <title>GymData Login</title>
         <link rel="stylesheet" type="text/css" href="/css/main.css"/>
     </head>

@@ -1,7 +1,24 @@
+<%-- members.jte represents membership data across time periods and demographic groups --%>
+
+@import com.webapps.gymdata.models.Member
+@import com.webapps.gymdata.models.Scan
+@import java.util.List
+
+<%-- Server-side parameter representing all scans in the database --%>
+@param List<Scan> scans
+<%-- Server-side parameter representing all members in the database --%>
+@param List<Member> members
+<%-- Server-side parameter representing the timestamps of each member --%>
+@param List<Member.Timestamp> timestamps
+
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="utf-8"/> 
         <title>Membership Report</title>
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+        <script src="/js/chart.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="/css/chart.min.css"/>
         <link rel="stylesheet" type="text/css" href="/css/main.css"/>
     </head>
     <body>
@@ -14,7 +31,58 @@
             </ul>
             <div class="graphs">
                 <h1>Membership Report</h1>
+                <div class="flex-container">
+                    <div class="chart-container big-data">
+                        <h1>${members.size()}</h1>
+                        <h2>Total Members</h2>
+                    </div>
+                    <div class="chart-container" style="text-align: center">
+                        <h2 style="margin-top: 0">Recent Activity</h2>
+                        <div id="recent-activity" class="activity-container">
+                            @for(Scan scan : scans)
+                                <p>${scan.getMember().getName()} scanned ${scan.getScanIn() ? "in" : "out"} at ${scan.getPrettyDate()}</p>
+                            @endfor
+                        </div>
+                    </div>
+                    <div id="main-chart-container" class="chart-container">
+                        <p id="main-select">
+                            See data from the last 
+                            <input type="number" value="1" min="1" id="main-chart-number"/>
+                            <select id="main-chart-unit">
+                                <option value="week">Week</option>
+                                <option value="month">Month</option>                            
+                                <option value="year">Year</option>
+                            </select>
+                        </p>
+                        <canvas id="main-chart"></canvas>
+                    </div>
+                    <div id="details-container" class="chart-container" style="display: none">
+                        <h2 id="date"></h2>
+                        <p id="visitors"></p>
+                        <canvas id="details"></canvas>
+                        <button onclick="buildDayChart()" class="bottom-button" id="day-button">Detailed View</button>
+                    </div>
+                </div>
             </div>
         </div>
+        <div style="display: none" id="timestamps-json">
+            <%-- Serialize timestamp information as a JSON array--%>
+            <%-- This allows the data to be used in JavaScript --%>
+            [
+            @for(int i = 0; i < timestamps.size(); i++)
+                !{var timestamp = timestamps.get(i);}
+                {
+                    "start": "${timestamp.getStart().getTime()}", 
+                    "end": "${timestamp.getStart().getTime()}", 
+                    "gender": "${timestamp.getMember().getGender()}"
+                }
+                <%-- Do not put a comma after the last object (otherwise JSON.parse will fail) --%>
+                @if(i != timestamps.size() - 1) 
+                    ,
+                @endif
+            @endfor
+            ]
+        </div>
+        <script src="/js/members.js"></script>
     </body>
 </html>
