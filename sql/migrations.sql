@@ -10,9 +10,9 @@ CREATE TABLE scans (
     id INT NOT NULL AUTO_INCREMENT,
     scanIn BOOLEAN,
     date DATETIME,
-    member_id INT NOT NULL,
+    memberId INT NOT NULL,
     PRIMARY KEY(id),
-    FOREIGN KEY(member_id) REFERENCES members(id)
+    FOREIGN KEY(memberId) REFERENCES members(id)
 );
 
 CREATE TABLE employees (

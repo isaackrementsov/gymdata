@@ -102,11 +102,16 @@ const colorArray = {
 // Register the custom plugin globally
 Chart.pluginService.register(colorArray);
 
+// Convert comma-separated number strings to ints (because parseInt("1,000")=1)
+function parseCommaInt(str){
+    return parseInt(str.replaceAll(',', ''))
+}
+
 // Build the main bar chart
 function buildChart(goBackNumber, goBackUnit, config, animate){
     // Remove and re-insert the main canvas to reset the chart
     $('#main-chart').remove();
-    $('#main-chart-container').append('<canvas id="main-chart" height="400" width="800"></canvas>');
+    $('#main-chart-container').append('<canvas id="main-chart" height="400" width="600"></canvas>');
     
     // This will store a map of data keyed by the day it is assigned to
     let byDate = {};
@@ -132,7 +137,7 @@ function buildChart(goBackNumber, goBackUnit, config, animate){
     // Loop through the Member.Timestamp data
     for(timestamp of timestamps){
         // Parse the start date in a JavaScript-usable format
-        let start = new Date(parseInt(timestamp.start));
+        let start = new Date(parseCommaInt(timestamp.start));
         // Conver this date to a total number of days
         let startDay = totalDays(start);
         
@@ -236,7 +241,7 @@ function buildDayChart(){
     
     $('#main-chart').remove();
     // Insert a new canvas to build this chart
-    $('#main-chart-container').append('<canvas id="main-chart" height="400" width="800"></canvas>');
+    $('#main-chart-container').append('<canvas id="main-chart" height="400" width="600"></canvas>');
     
     // Data map to be arranged similarly to byDate, except statistics are collected per hour
     let byHour = {};
@@ -254,8 +259,8 @@ function buildDayChart(){
     // Collect data from Member.Timestamps for the focusedDate
     for(timestamp of timestamps){
         // Parse the start and end scan times as JS Dates
-        let start = new Date(parseInt(timestamp.start));
-        let end = new Date(parseInt(timestamp.end));
+        let start = new Date(parseCommaInt(timestamp.start));
+        let end = new Date(parseCommaInt(timestamp.end));
         
         // Check whether the timestamp's start matches the focused date (date strings do not include time)
         if(start.toDateString() == focusedDate.toDateString()){

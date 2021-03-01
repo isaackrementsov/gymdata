@@ -1,15 +1,4 @@
-<%-- members.jte represents membership data across time periods and demographic groups --%>
-
-@import com.webapps.gymdata.models.Member
-@import com.webapps.gymdata.models.Scan
-@import java.util.List
-
-<%-- Server-side parameter representing all scans in the database --%>
-@param List<Scan> scans
-<%-- Server-side parameter representing all members in the database --%>
-@param List<Member> members
-<%-- Server-side parameter representing the timestamps of each member --%>
-@param List<Member.Timestamp> timestamps
+<#-- members.jte represents membership data across time periods and demographic groups -->
 
 <!DOCTYPE html>
 <html>
@@ -20,7 +9,7 @@
         <script src="/js/chart.min.js"></script>
         <link rel="stylesheet" type="text/css" href="/css/chart.min.css"/>
         <link rel="stylesheet" type="text/css" href="/css/main.css"/>
-    </head>
+    </head> 
     <body>
         <div class="content flex-container">
             <ul class="side-nav">
@@ -33,15 +22,15 @@
                 <h1>Membership Report</h1>
                 <div class="flex-container">
                     <div class="chart-container big-data">
-                        <h1>${members.size()}</h1>
+                        <h1>${members?size}</h1>
                         <h2>Total Members</h2>
                     </div>
                     <div class="chart-container" style="text-align: center">
                         <h2 style="margin-top: 0">Recent Activity</h2>
                         <div id="recent-activity" class="activity-container">
-                            @for(Scan scan : scans)
-                                <p>${scan.getMember().getName()} scanned ${scan.getScanIn() ? "in" : "out"} at ${scan.getPrettyDate()}</p>
-                            @endfor
+                            <#list scans[0..10] as scan>
+                                <p>${scan.member.name} scanned ${scan.scanIn?then("in", "out")} at ${scan.getPrettyDate()}</p>
+                            </#list>
                         </div>
                     </div>
                     <div id="main-chart-container" class="chart-container">
@@ -66,21 +55,22 @@
             </div>
         </div>
         <div style="display: none" id="timestamps-json">
-            <%-- Serialize timestamp information as a JSON array--%>
-            <%-- This allows the data to be used in JavaScript --%>
+            <#-- Serialize timestamp information as a JSON array-->
+            <#-- This allows the data to be used in JavaScript -->
             [
-            @for(int i = 0; i < timestamps.size(); i++)
-                !{var timestamp = timestamps.get(i);}
+            <#assign last = timestamps?size - 1>
+            <#list 0..last as i>
+                <#assign timestamp = timestamps[i]>
                 {
-                    "start": "${timestamp.getStart().getTime()}", 
-                    "end": "${timestamp.getStart().getTime()}", 
-                    "gender": "${timestamp.getMember().getGender()}"
+                    "start": "${timestamp.start?long}", 
+                    "end": "${(timestamp.end!timestamp.start)?long}", 
+                    "gender": "${timestamp.member.gender}"
                 }
-                <%-- Do not put a comma after the last object (otherwise JSON.parse will fail) --%>
-                @if(i != timestamps.size() - 1) 
+                <#-- Do not put a comma after the last object (otherwise JSON.parse will fail) -->
+                <#if i != last> 
                     ,
-                @endif
-            @endfor
+                </#if>
+            </#list>
             ]
         </div>
         <script src="/js/members.js"></script>

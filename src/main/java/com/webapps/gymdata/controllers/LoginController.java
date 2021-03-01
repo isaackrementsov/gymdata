@@ -9,7 +9,7 @@ public class LoginController {
     // Render the index login page
     public static void get(Context ctx){
         // Render JTE template (https://javalin.io/tutorials/jte)
-        ctx.render("index.ftlh");
+        ctx.render("index.ftl");
     }
     
     // Handle login form submit

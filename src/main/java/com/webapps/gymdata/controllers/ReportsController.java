@@ -33,7 +33,7 @@ public class ReportsController {
         data.put("scans", scans);
         
         // Load template with timestamps, members, and scans
-        ctx.render("members.ftlh", data);        
+        ctx.render("members.ftl", data);        
     }
     
     // Load staff report
@@ -41,45 +41,47 @@ public class ReportsController {
         // Get all employees in the database
         List<Employee> staff = Employee.getAll();
         // Group employees by hour
-        Map<Integer, Employee.HourGroup> hourGroups = new HashMap<>();
+        Map<String, Employee.HourGroup> hourGroups = new HashMap<>();
         
         // Keep track of aggregate cost
         double totalCost = 0.0;
+        // Keep hour grouping map keys separately for displaying entries in a specific order
+        List<Integer> hourGroupKeys = new ArrayList<>();
         
         for(Employee employee : staff){
             // Try to find an HourGroup to assign the employee
             Integer hours = employee.getHoursPerWeek();
-            Employee.HourGroup current = hourGroups.get(hours);
-            
+            String hourKey = "hour_" + hours.toString();
+            Employee.HourGroup current = hourGroups.get(hourKey);
+
             // If there is no existing group for this employee's hours, make one
             if(current == null){
                 // Create a new HourGroup and add this employee's information
                 current = new Employee.HourGroup(hours);
                 current.addEmployee(employee);
                 // Add this to the HashMap
-                hourGroups.put(hours, current);
+                hourGroupKeys.add(hours);
+                hourGroups.put(hourKey, current);
             }else{
                 // If there is an existing group, add this employee's information to it
-                hourGroups.get(hours).addEmployee(employee);
+                hourGroups.get(hourKey).addEmployee(employee);
             }
 
             // Add each employee's cost to the total
             totalCost += employee.getWeeklyCost();            
         }
         
-        // Keep hour grouping map keys separately for displaying entries in a specific order
-        List<Integer> hourGroupKeys = new ArrayList<>(hourGroups.keySet());
         // Sort the keys so that groups are listed in order of increasing hours
         hourGroupKeys.sort(Comparator.naturalOrder());
         
         HashMap<String, Object> data = new HashMap<>();
-        data.put("totalCost", totalCost);
+        data.put("totalCost", Math.round(totalCost*100.0)/100.0);
         data.put("staff", staff);
         data.put("hourGroups", hourGroups);
         data.put("hourGroupKeys", hourGroupKeys);
         
         // Render the staff report template and pass the total employee cost, staff, and hour groups as parameters
-        ctx.render("staff.ftlh", data);        
+        ctx.render("staff.ftl", data);        
     }
     
 }

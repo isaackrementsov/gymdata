@@ -1,18 +1,4 @@
-<%-- staff.jte provides and overview of employee data and overall labor costs --%>
-
-@import java.util.List
-@import java.util.Map
-@import com.webapps.gymdata.models.Employee
-
-<%-- Server-side parameter representing the calculated total labor cost --%>
-@param Double totalCost
-<%-- Server-side parameter representing all employees in the database --%>
-@param List<Employee> staff
-<%-- Server-side parameter with cost statistics grouped by hours per week --%>
-@param Map<Integer, Employee.HourGroup> hourGroups
-<%-- Server-side parameter containing keys to the hourGroups Map, sorted in order of increasing hours --%>
-@param List<Integer> hourGroupKeys
-
+<#-- staff.jte provides and overview of employee data and overall labor costs -->
 <!DOCTYPE html>
 <html>
     <head>
@@ -35,19 +21,19 @@
                 <h1>Staff Report</h1>
                 <div class="flex-container">
                     <div class="chart-container big-data">
-                        <h1>€${Math.round(totalCost*100.0)/100.0}</h1>
+                        <h1>&euro;${totalCost}</h1>
                         <h2>Weekly Labor Cost</h2>
                     </div>
                     <div class="chart-container" id="hour-groups">
-                        <%-- Loop through the hourGroups in order of increasing hours--%>
-                        @for(Integer hour : hourGroupKeys)
-                            !{var hourGroup = hourGroups.get(hour);}
-                            <%-- Show a report of this group's statistics --%>
+                        <#-- Loop through the hourGroups in order of increasing hours-->
+                        <#list hourGroupKeys as hour>
+                            <#assign hourGroup = hourGroups["hour_" + hour]>
+                            <#-- Show a report of this group's statistics -->
                             <div class="hour-group">
-                                <h3>${hourGroup.getNumberOfEmployees()} Employees working ${hour} hours/week</h3>
-                                <p><span>€${hourGroup.getMinWage()}-${hourGroup.getMaxWage()}/hour</span><span>€${hourGroup.getTotalCost()} weekly cost</span></p>
+                                <h3>${hourGroup.numberOfEmployees} Employees working ${hour} hours/week</h3>
+                                <p><span>&euro;${hourGroup.minWage}-${hourGroup.maxWage}/hour</span><span>&euro;${hourGroup.totalCost} weekly cost</span></p>
                             </div>
-                        @endfor
+                        </#list>
                     </div>
                 </div>
             </div>

@@ -1,3 +1,4 @@
 /target
 /jte-classes
+/src/main/resources/META-INF/persistence.xml
 config.json

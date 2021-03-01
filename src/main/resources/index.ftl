@@ -1,4 +1,4 @@
-<%-- index.jte provides a simple login system for the admin to access reports --%>
+<#-- index.jte provides a simple login system for the admin to access reports -->
 
 <!DOCTYPE html>
 <html>
