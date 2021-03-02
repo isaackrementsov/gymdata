@@ -28,9 +28,14 @@
                     <div class="chart-container" style="text-align: center">
                         <h2 style="margin-top: 0">Recent Activity</h2>
                         <div id="recent-activity" class="activity-container">
-                            <#list scans[0..10] as scan>
-                                <p>${scan.member.name} scanned ${scan.scanIn?then("in", "out")} at ${scan.getPrettyDate()}</p>
-                            </#list>
+                            <#assign l = scans?size>
+                            <#if l == 0>
+                                <p>No recent scans to show (run createData/createStaffData in Main.java to auto-generate)</p>
+                            <#else>
+                                <#list scans[0..10] as scan>
+                                    <p>${scan.member.name} scanned ${scan.scanIn?then("in", "out")} at ${scan.getPrettyDate()}</p>
+                                </#list>
+                            </#if>
                         </div>
                     </div>
                     <div id="main-chart-container" class="chart-container">
@@ -59,18 +64,20 @@
             <#-- This allows the data to be used in JavaScript -->
             [
             <#assign last = timestamps?size - 1>
-            <#list 0..last as i>
-                <#assign timestamp = timestamps[i]>
-                {
-                    "start": "${timestamp.start?long}", 
-                    "end": "${(timestamp.end!timestamp.start)?long}", 
-                    "gender": "${timestamp.member.gender}"
-                }
-                <#-- Do not put a comma after the last object (otherwise JSON.parse will fail) -->
-                <#if i != last> 
-                    ,
-                </#if>
-            </#list>
+            <#if last != -1>
+                <#list 0..last as i>
+                    <#assign timestamp = timestamps[i]>
+                    {
+                        "start": "${timestamp.start?long}", 
+                        "end": "${(timestamp.end!timestamp.start)?long}", 
+                        "gender": "${timestamp.member.gender}"
+                    }
+                    <#-- Do not put a comma after the last object (otherwise JSON.parse will fail) -->
+                    <#if i != last> 
+                        ,
+                    </#if>
+                </#list>
+            </#if>
             ]
         </div>
         <script src="/js/members.js"></script>
