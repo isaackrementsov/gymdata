@@ -83,6 +83,10 @@ public class Member extends Model implements Serializable {
         return member;
     }
     
+    public List<Scan> getScans(){
+        return scans;
+    }
+    
     // Get time ranges for when the member was present in the gym (local Timestamp class is at the bottom of this class body)
     public List<Timestamp> getTimestamps(){
         List<Timestamp> timestamps = new ArrayList<>();

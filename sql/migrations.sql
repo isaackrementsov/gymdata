@@ -24,3 +24,9 @@ CREATE TABLE employees (
     PRIMARY KEY(id)
 );  
 
+CREATE TABLE login (
+    id INT NOT NULL AUTO_INCREMENT,
+    username VARCHAR(45),
+    password VARCHAR(45),
+    PRIMARY KEY(id)
+);

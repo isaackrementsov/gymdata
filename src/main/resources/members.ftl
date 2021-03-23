@@ -16,7 +16,7 @@
                 <a href="#"><h1>View Reports</h1></a>
                 <a class="active link" href="/reports/membership">Membership</a>
                 <a class="link" href="/reports/staff">Staff</a>
-                <a class="link" href="/logout">Logout</a>
+                <a class="link" href="/login/logout">Logout</a>
             </ul>
             <div class="graphs">
                 <h1>Membership Report</h1>
@@ -24,6 +24,7 @@
                     <div class="chart-container big-data">
                         <h1>${members?size}</h1>
                         <h2>Total Members</h2>
+                        <h3>${counter} currently checked in</h3>
                     </div>
                     <div class="chart-container" style="text-align: center">
                         <h2 style="margin-top: 0">Recent Activity</h2>
@@ -32,7 +33,7 @@
                             <#if l == 0>
                                 <p>No recent scans to show (run createData/createStaffData in Main.java to auto-generate)</p>
                             <#else>
-                                <#list scans[0..10] as scan>
+                                <#list scans as scan>
                                     <p>${scan.member.name} scanned ${scan.scanIn?then("in", "out")} at ${scan.getPrettyDate()}</p>
                                 </#list>
                             </#if>

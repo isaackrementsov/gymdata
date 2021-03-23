@@ -3,8 +3,11 @@ package com.webapps.gymdata.controllers;
 import com.webapps.gymdata.models.Employee;
 import com.webapps.gymdata.models.Member;
 import com.webapps.gymdata.models.Scan;
+import com.webapps.gymdata.Server;
+
 import io.javalin.http.Context;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -12,11 +15,15 @@ import java.util.Map;
 
 // Controller for loading data reports
 public class ReportsController {
-
+    
     // Load a membership report
     public static void getMembership(Context ctx){
         // Get all scans in the gym records
         List<Scan> scans = Scan.getAll();
+        // Show the 10 most recent scans
+        Collections.sort(scans, new Scan.DateComparator());
+        scans = scans.subList(0, Math.min(scans.size() - 1, 10));
+        
         // Get all gym members
         List<Member> members = Member.getAll();
         // List to store time ranges where members were present
@@ -31,6 +38,7 @@ public class ReportsController {
         data.put("timestamps", timestamps);
         data.put("members", members);
         data.put("scans", scans);
+        data.put("counter", Server.portRead.counter);
         
         // Load template with timestamps, members, and scans
         ctx.render("members.ftl", data);        

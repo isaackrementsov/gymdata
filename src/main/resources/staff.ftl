@@ -15,7 +15,7 @@
                 <a href="#"><h1>View Reports</h1></a>
                 <a class="link" href="/reports/membership">Membership</a>
                 <a class="active link" href="/reports/staff">Staff</a>
-                <a class="link" href="/logout">Logout</a>
+                <a class="link" href="/login/logout">Logout</a>
             </ul>
             <div class="graphs">
                 <h1>Staff Report</h1>

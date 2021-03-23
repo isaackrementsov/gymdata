@@ -23,7 +23,10 @@ public class Main {
             //createStaffData(25);
             
             // Start the application server
-            Server.initialize();            
+            Server.initialize();   
+            
+            // Uncomment line below to generate dummy scans & count data
+            //createCountData(10);
         }catch(Exception e){
             // Handle errors starting the server -- this is usually caused by an invalid config.json
             System.out.println("There was an error starting the server...");
@@ -90,6 +93,13 @@ public class Main {
             Employee employee = new Employee("Jeff", "Smith", hours, 10 + 10*Math.random());
             // Persist the employee to the database
             employee.save();
+        }
+    }
+    
+    // Used for testing saveScan method without using arduino setup
+    public static void createCountData(int n){
+        for(int i = 0; i < n; i++){
+            Server.portRead.saveScan();
         }
     }
 }

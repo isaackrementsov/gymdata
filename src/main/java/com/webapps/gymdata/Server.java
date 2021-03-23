@@ -1,6 +1,7 @@
 package com.webapps.gymdata;
 
 // External controllers for endpoint handling
+import com.webapps.gymdata.controllers.HomeController;
 import com.webapps.gymdata.controllers.LoginController;
 import com.webapps.gymdata.controllers.ReportsController;
 
@@ -31,9 +32,7 @@ public class Server {
     // Directory where views are stored [public folder in root project directory]
     static String STATIC_DIRECTORY;
     
-    // Predefined credentials to login and see reports [set in config.json]
-    static String ADMIN_USERNAME;
-    static String ADMIN_PASSWORD;
+    public static PortRead portRead = new PortRead();
     
     // Roles to determine whether a user has logged in and can access reports
     // UserRole.ADMIN = logged in, UserRole.STD = not logged in
@@ -63,12 +62,6 @@ public class Server {
         PORT = ((Long) server.get("port")).intValue();
         // Get the static directory's ("public" folder in root project directory) absolute path
         STATIC_DIRECTORY = Paths.get("public").toAbsolutePath().toString();
-        
-        // Get admin login values
-        JSONObject admin = (JSONObject) config.get("admin");
-        // Set the username and password needed to access reports
-        ADMIN_USERNAME = (String) admin.get("username");
-        ADMIN_PASSWORD = (String) admin.get("password");
     }
     
     public static void start(){
@@ -94,7 +87,7 @@ public class Server {
                         ctx.redirect("/reports/membership");
                     }else{
                         // A user that is not logged in (STD) will be sent to the login page
-                        ctx.redirect("/");                        
+                        ctx.redirect("/login");                        
                     }
                 }
             });
@@ -111,10 +104,14 @@ public class Server {
             // Handle GET/POST requests to '/' with the LoginController
             // These routes are available to users that have not yet logged in
             path("/", () -> {               
-               get(LoginController::get, anyone);
-               post(LoginController::post, anyone);
-               
-               get("/logout", LoginController::endSession, adminOnly);
+               get(HomeController::get, anyone);
+            });
+            
+            path("/login", () -> {
+                get(LoginController::get, anyone);
+                post(LoginController::post, anyone);
+                
+                get("/logout", LoginController::endSession, adminOnly);
             });
             
             // Handle GET requests to '/reports/xxxx' with the ReportsController 
@@ -131,7 +128,7 @@ public class Server {
     // Get a user's role based on request context
     public static UserRole getRole(Context ctx){
         // Check whether a username is stored in the user's session
-        if(ADMIN_USERNAME.equals(ctx.sessionAttribute("username"))){
+        if(ctx.sessionAttribute("username") != null){
             // If the value matches the admin username, the user has logged in
             return UserRole.ADMIN;
         }else{
@@ -139,9 +136,4 @@ public class Server {
             return UserRole.STD;
         }
     }
-    
-    // Check whether a given username and password match the admin credentials stored in this class
-    public static boolean validAdmin(String username, String password){
-        return (username.equals(ADMIN_USERNAME) && password.equals(ADMIN_PASSWORD));
-    }    
 }

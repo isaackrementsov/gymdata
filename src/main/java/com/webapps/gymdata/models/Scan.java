@@ -3,6 +3,7 @@ package com.webapps.gymdata.models;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
@@ -123,6 +124,16 @@ public class Scan extends Model implements Serializable {
         setScanIn(scanIn);
         setDate(date);
         setMember(member);
+    }
+    
+    public static class DateComparator implements Comparator<Scan> {
+        @Override
+        public int compare(Scan scanA, Scan scanB){
+            long dateA = scanA.getDate().getTime();
+            long dateB = scanB.getDate().getTime();
+            
+            return dateA < dateB ? 1 : dateA == dateB ? 0 : -1;
+        }
     }
     
 }
