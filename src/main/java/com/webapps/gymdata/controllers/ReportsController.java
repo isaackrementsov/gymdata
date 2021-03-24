@@ -22,7 +22,7 @@ public class ReportsController {
         List<Scan> scans = Scan.getAll();
         // Show the 10 most recent scans
         Collections.sort(scans, new Scan.DateComparator());
-        scans = scans.subList(0, Math.min(scans.size() - 1, 10));
+        scans = scans.size() > 1 ? scans.subList(0, Math.min(scans.size() - 1, 10)) : scans;
         
         // Get all gym members
         List<Member> members = Member.getAll();
