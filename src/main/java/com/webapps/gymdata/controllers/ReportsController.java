@@ -15,7 +15,7 @@ import java.util.Map;
 
 // Controller for loading data reports
 public class ReportsController {
-    
+        
     // Load a membership report
     public static void getMembership(Context ctx){
         // Get all scans in the gym records

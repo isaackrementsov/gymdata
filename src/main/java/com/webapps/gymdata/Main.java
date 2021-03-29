@@ -26,7 +26,7 @@ public class Main {
             Server.initialize();   
             
             // Uncomment line below to generate dummy scans & count data
-            //createCountData(10);
+            createCountData(10);
         }catch(Exception e){
             // Handle errors starting the server -- this is usually caused by an invalid config.json
             System.out.println("There was an error starting the server...");

@@ -7,6 +7,7 @@
         <title>Membership Report</title>
         <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
         <script src="/js/chart.min.js"></script>
+        <link rel="icon" type="image/x-icon" href="/assets/img/favicon.ico"/>
         <link rel="stylesheet" type="text/css" href="/css/chart.min.css"/>
         <link rel="stylesheet" type="text/css" href="/css/main.css"/>
     </head> 
@@ -69,8 +70,8 @@
                 <#list 0..last as i>
                     <#assign timestamp = timestamps[i]>
                     {
-                        "start": "${timestamp.start?long}", 
-                        "end": "${(timestamp.end!timestamp.start)?long}", 
+                        "start": "${timestamp.start?long - 86400000}", 
+                        "end": "${(timestamp.end!timestamp.start)?long - 86400000}", 
                         "gender": "${timestamp.member.gender}"
                     }
                     <#-- Do not put a comma after the last object (otherwise JSON.parse will fail) -->

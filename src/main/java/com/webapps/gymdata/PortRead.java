@@ -102,9 +102,7 @@ public class PortRead {
         List<Scan> previousScans = member.getScans();
         Collections.sort(previousScans, new Scan.DateComparator());
         boolean lastScanIn = previousScans.size() > 0 ? previousScans.get(0).getScanIn() : false;
-        
-        System.out.println(lastScanIn);
-        
+                
         Scan scan = new Scan();
         scan.setMember(member);
         scan.setDate(new Date());
